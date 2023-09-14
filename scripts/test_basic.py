@@ -1,5 +1,6 @@
 import sys
 import pygame
+import threading
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QPlainTextEdit
 from PyQt5.QtGui import QSyntaxHighlighter, QTextCursor, QTextCharFormat
 from PyQt5.Qsci import QsciScintilla, QsciLexerPython
@@ -58,7 +59,6 @@ class PythonSyntaxHighlighter(QSyntaxHighlighter):
                 self.setFormat(index, length, format)
                 index = expression.indexIn(text, index + length)
 
-
 class PygameRunner(QWidget):
     def __init__(self):
         super().__init__()
@@ -80,6 +80,9 @@ class PygameRunner(QWidget):
 
         self.setLayout(layout)
 
+        # Store the Pygame thread
+        self.pygame_thread = None
+
     def run_pygame_code(self):
         # Clear the Pygame screen if it's already open
         if self.screen:
@@ -88,26 +91,31 @@ class PygameRunner(QWidget):
         # Get the Python code from the code editor
         pygame_code = self.code_editor.text()
 
-        # Initialize Pygame
-        pygame.init()
+        # Define a function to run Pygame in a separate thread
+        def pygame_thread_function():
+            # Initialize Pygame
+            pygame.init()
 
-        # Create a Pygame screen (adjust dimensions as needed)
-        self.screen = pygame.display.set_mode((800, 600))
+            # Create a Pygame screen (adjust dimensions as needed)
+            self.screen = pygame.display.set_mode((800, 600))
 
-        # Execute the Python code (make sure to handle Pygame events)
-        try:
-            exec(pygame_code)
-        except Exception as e:
-            print(f"Error: {e}")
+            # Execute the Python code (make sure to handle Pygame events)
+            try:
+                exec(pygame_code)
+            except Exception as e:
+                print(f"Error: {e}")
 
-        # Main loop to keep the Pygame window open
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-        pygame.quit()
+            # Main loop to keep the Pygame window open
+            running = True
+            while running:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+            pygame.quit()
 
+        # Start the Pygame thread
+        self.pygame_thread = threading.Thread(target=pygame_thread_function, daemon=True)
+        self.pygame_thread.start()
 
 class PygameApp(QMainWindow):
     def __init__(self):
