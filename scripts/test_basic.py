@@ -4,7 +4,7 @@ import threading
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QPlainTextEdit
 from PyQt5.QtGui import QSyntaxHighlighter, QTextCursor, QTextCharFormat
 from PyQt5.Qsci import QsciScintilla, QsciLexerPython
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QRegExp
 from PyQt5.QtGui import QFont
 
 class PythonCodeEditor(QsciScintilla):
