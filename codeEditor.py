@@ -2,6 +2,7 @@ from PyQt5.Qsci import QsciScintilla, QsciLexerPython
 from PyQt5.QtGui import QSyntaxHighlighter, QTextCharFormat
 from PyQt5.QtCore import Qt, QRegExp
 from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QApplication
 
 
 class PythonCodeEditor(QsciScintilla):
@@ -20,6 +21,12 @@ class PythonCodeEditor(QsciScintilla):
 
         # Create a syntax highlighter
         self.highlighter = PythonSyntaxHighlighter(self)
+
+        font = QFont()
+        screen_dpi = QApplication.primaryScreen().logicalDotsPerInch()
+        font_size = int(screen_dpi / 96 * 16)
+        font.setPixelSize(font_size)
+        self.setFont(font)
 
     def setPlainText(self, text):
         super().setPlainText(text)
