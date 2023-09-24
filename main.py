@@ -3,8 +3,10 @@ import os
 import threading
 import pygame
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton
+from PyQt5.QtGui import QIcon
 from PyQt5 import uic  # Import the uic module
 from codeEditor import PythonCodeEditor
+import subprocess
 
 class PygameApp(QMainWindow):
     def __init__(self):
@@ -19,12 +21,18 @@ class PygameApp(QMainWindow):
 
         self.codePanelLayout:QVBoxLayout
         self.runButton:QPushButton
+        self.terminalButton:QPushButton
 
         self.codeEditorWidget:QWidget = PythonCodeEditor()
         
         self.codePanelLayout.addWidget(self.codeEditorWidget)
-        self.runButton.clicked.connect(self.runPygameCode)
 
+        self.terminalButton.setIcon(QIcon("./ui/img/terminal.png"))
+        self.runButton.setIcon(QIcon("./ui/img/game.png"))
+        self.runButton.clicked.connect(self.runPygameCode)
+        self.terminalButton.clicked.connect(self.runTerminalCommand)
+
+        self.populateTree()
 
         self.show()
 
@@ -60,6 +68,17 @@ class PygameApp(QMainWindow):
         # Start the Pygame thread
         self.pygame_thread = threading.Thread(target=pygame_thread_function, daemon=True)
         self.pygame_thread.start()
+
+    def runTerminalCommand(self):
+        
+        with open("temp.py", "w") as file:
+            file.write(self.codeEditorWidget.text())
+        command = f"python temp.py"
+        subprocess.Popen(["gnome-terminal", "--", "bash", "-c", f"{command}; read -p 'Press Enter to exit...'"])
+        print("Done Terminal Code")
+
+    def populateTree():
+        ...
 
 
 
