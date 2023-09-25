@@ -1,5 +1,6 @@
 import pygame
 import os
+import random
 
 file_folder = os.path.join(os.path.abspath(__file__).rsplit("/", 1)[0])
 
@@ -94,3 +95,78 @@ class Dinosaur():
 
     def draw(self):
         self.screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
+
+
+class Obstacle:
+    def __init__(self, screen, image, type, game_speed=20):
+        self.image = image
+        self.type = type
+        self.rect = self.image[self.type].get_rect()
+        self.screen:pygame.Surface = screen
+        self.rect.x = self.screen.get_width()
+        self.game_speed = game_speed
+
+    def update(self, obstacles):
+        self.rect.x -= self.game_speed
+        if self.rect.x < -self.rect.width:
+            obstacles.pop()
+            return 1
+        return 0
+
+    def draw(self):
+        self.screen.blit(self.image[self.type], self.rect)
+
+
+class SmallCactus(Obstacle):
+    def __init__(self, screen):
+        self.type = random.randint(0, 2)
+        image = [pygame.image.load(os.path.join(file_folder, "img", "SmallCactus1.png")),
+                pygame.image.load(os.path.join(file_folder, "img", "SmallCactus2.png")),
+                pygame.image.load(os.path.join(file_folder, "img", "SmallCactus3.png"))]
+        super().__init__(screen, image, self.type)
+        self.rect.y = 325
+
+
+class LargeCactus(Obstacle):
+    def __init__(self, screen):
+        self.type = random.randint(0, 2)
+        image = [pygame.image.load(os.path.join(file_folder, "img", "LargeCactus1.png")),
+                pygame.image.load(os.path.join(file_folder, "img", "LargeCactus2.png")),
+                pygame.image.load(os.path.join(file_folder, "img", "LargeCactus3.png"))]
+        super().__init__(screen, image, self.type)
+        self.rect.y = 300
+
+
+class Bird(Obstacle):
+    def __init__(self, screen):
+        self.type = 0
+        image = [pygame.image.load(os.path.join(file_folder, "img", "Bird1.png")),
+                pygame.image.load(os.path.join(file_folder, "img", "Bird2.png"))]
+        super().__init__(screen, image, self.type)
+        self.rect.y = 250
+        self.index = 0
+        
+
+    def draw(self):
+        if self.index >= 9:
+            self.index = 0
+        self.screen.blit(self.image[self.index//5], self.rect)
+        self.index += 1
+
+class Cloud:
+    def __init__(self, screen, game_speed=20):
+        self.screen:pygame.Surface = screen
+        self.x = self.screen.get_width() + random.randint(800, 1000)
+        self.y = random.randint(50, 100)
+        self.image = pygame.image.load(os.path.join(file_folder, "img", "Cloud.png"))
+        self.width = self.image.get_width()
+        self.game_speed = game_speed
+
+    def update(self):
+        self.x -= self.game_speed
+        if self.x < -self.width:
+            self.x = self.screen.get_width() + random.randint(2500, 3000)
+            self.y = random.randint(50, 100)
+
+    def draw(self):
+        self.screen.blit(self.image, (self.x, self.y))
