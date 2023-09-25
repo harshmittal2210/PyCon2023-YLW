@@ -29,7 +29,7 @@ class PythonCodeEditor(QsciScintilla):
         self.setFont(font)
 
     def setPlainText(self, text):
-        super().setPlainText(text)
+        self.setText(text)
         self.setCursorPosition(0, 0)
 
 
