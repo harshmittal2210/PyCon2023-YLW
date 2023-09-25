@@ -4,7 +4,8 @@ import threading
 import pygame
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QFileDialog
 from PyQt5.QtWidgets import QAction, QTreeWidget, QPushButton, QTreeWidgetItem
-from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5 import uic  # Import the uic module
 from codeEditor import PythonCodeEditor
 import subprocess
@@ -43,8 +44,8 @@ class PygameApp(QMainWindow):
         ## Actions
         self.actionOpen.triggered.connect(self.open_file)
         self.actionSave.triggered.connect(self.save_file)
-        self.actionFAQ.triggered.connect(self.save_file)
-        self.actionAbout.triggered.connect(self.save_file)
+        self.actionFAQ.triggered.connect(self.open_faq)
+        self.actionAbout.triggered.connect(self.open_about)
 
         self.actionOpen.setShortcut("Ctrl+O")
         self.actionSave.setShortcut("Ctrl+S")
@@ -160,6 +161,15 @@ class PygameApp(QMainWindow):
         if file_path:
             with open(file_path, 'w') as file:
                 file.write(self.codeEditorWidget.text())
+    
+    def open_faq(self):
+        url = QUrl("https://www.harshmittal.co.in/PyCon2023-YLW")
+        QDesktopServices.openUrl(url)
+
+    def open_about(self):
+        url = QUrl("https://github.com/harshmittal2210/PyCon2023-YLW/wiki")
+        QDesktopServices.openUrl(url)
+        
 
 
 
