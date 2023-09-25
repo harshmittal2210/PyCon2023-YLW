@@ -50,7 +50,7 @@ class PygameApp(QMainWindow):
         # Define a function to run Pygame in a separate thread
         def pygame_thread_function():
             # Initialize Pygame
-            pygame.init()
+            # pygame.init()
 
             # Create a Pygame screen (adjust dimensions as needed)
             # self.screen = pygame.display.set_mode((800, 600))
