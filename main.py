@@ -2,7 +2,8 @@ import sys
 import os
 import threading
 import pygame
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QTreeWidget, QPushButton, QTreeWidgetItem
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QFileDialog
+from PyQt5.QtWidgets import QAction, QTreeWidget, QPushButton, QTreeWidgetItem
 from PyQt5.QtGui import QIcon
 from PyQt5 import uic  # Import the uic module
 from codeEditor import PythonCodeEditor
@@ -24,6 +25,11 @@ class PygameApp(QMainWindow):
         self.terminalButton:QPushButton
         self.fileDirTreeWidget:QTreeWidget
 
+        self.actionOpen:QAction
+        self.actionSave:QAction
+        self.actionFAQ:QAction
+        self.actionAbout:QAction
+
         self.codeEditorWidget:QWidget = PythonCodeEditor()
         
         self.codePanelLayout.addWidget(self.codeEditorWidget)
@@ -33,6 +39,15 @@ class PygameApp(QMainWindow):
         self.runButton.clicked.connect(self.runPygameCode)
         self.terminalButton.clicked.connect(self.runTerminalCommand)
         self.fileDirTreeWidget.itemDoubleClicked.connect(self.openTutorialFile)
+
+        ## Actions
+        self.actionOpen.triggered.connect(self.open_file)
+        self.actionSave.triggered.connect(self.save_file)
+        self.actionFAQ.triggered.connect(self.save_file)
+        self.actionAbout.triggered.connect(self.save_file)
+
+        self.actionOpen.setShortcut("Ctrl+O")
+        self.actionSave.setShortcut("Ctrl+S")
 
         self.populateTree("Tutorials", self.fileDirTreeWidget)
         self.fileDirTreeWidget.sortItems(0, 0)
@@ -110,6 +125,41 @@ class PygameApp(QMainWindow):
                 # Read the entire file content into a string
                 file_content = file.read()
                 self.codeEditorWidget.setPlainText(file_content)
+    
+    def open_file(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        options |= QFileDialog.ExistingFiles
+
+        file_dialog = QFileDialog()
+        file_dialog.setNameFilter("Python Files (*.py)")
+        file_dialog.setViewMode(QFileDialog.List)
+        file_dialog.setOptions(options)
+
+        if file_dialog.exec_():
+            selected_files = file_dialog.selectedFiles()
+            for file_path in selected_files:
+                with open(file_path, 'r') as file:
+                    file_contents = file.read()
+                    # Now you can work with the file_contents
+                    self.codeEditorWidget.setPlainText(file_contents)
+                    return
+    
+    def save_file(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        options |= QFileDialog.ExistingFiles
+
+        file_dialog = QFileDialog()
+        file_dialog.setNameFilter("Python Files (*.py)")
+        file_dialog.setOptions(options)
+
+        default_file_name = "TestCode.py"  # Default file name
+        file_path, _ = file_dialog.getSaveFileName(self, "Save File", default_file_name, "Python Files (*.py)")
+
+        if file_path:
+            with open(file_path, 'w') as file:
+                file.write(self.codeEditorWidget.text())
 
 
 
