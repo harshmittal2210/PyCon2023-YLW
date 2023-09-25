@@ -38,7 +38,7 @@ class PygameApp(QMainWindow):
         self.fileDirTreeWidget.sortItems(0, 0)
 
         self.show()
-        sys.path.append("./dinoGame")
+        
 
     def runPygameCode(self):
         # Clear the Pygame screen if it's already open
@@ -87,9 +87,10 @@ class PygameApp(QMainWindow):
             itemPath = os.path.join(path, item)
             itemIsDir = os.path.isdir(itemPath)
 
-            if itemIsDir:
+            if itemIsDir and type(parent) == QTreeWidget:
                 parentItem = QTreeWidgetItem(parent, [item])
                 parent.addTopLevelItem(parentItem)
+                sys.path.append(itemPath)
                 self.populateTree(itemPath, parentItem)
             else:
                 QTreeWidgetItem(parent, [item])
