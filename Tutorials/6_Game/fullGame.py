@@ -74,6 +74,7 @@ while alive:
 
 
                 ground.draw()
+                ground.update()
                 dino.update(user_input)
                 dino.draw()
 
@@ -87,3 +88,4 @@ while alive:
 
                 clock.tick(30)
                 pygame.display.update()
+pygame.quit()

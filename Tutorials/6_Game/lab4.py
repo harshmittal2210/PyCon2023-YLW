@@ -1,5 +1,5 @@
 import pygame
-from dinoGame.elements import Track
+from dinoGame.elements import Track, Dinosaur, Cloud
 
 # Initialize Pygame
 pygame.init()
@@ -22,6 +22,8 @@ while alive:
         elif event.type == pygame.KEYDOWN:
             ## Start Game
             ground = Track(SCREEN)
+            dino = Dinosaur(SCREEN)
+            cloud = Cloud(SCREEN)
             clock = pygame.time.Clock()
 
             run = True
@@ -31,9 +33,19 @@ while alive:
                         run = False
                         continue
 
+                ## Update The Elements
+                user_input = pygame.key.get_pressed()
+                dino.update(user_input)
+                ground.update()
+
+                ################
+
+                ### Draw All Layers
                 SCREEN.fill((255,255,255))
-                
                 ground.draw()
+
+                ##############End
+
                 clock.tick(30)
                 pygame.display.update()
 pygame.quit()

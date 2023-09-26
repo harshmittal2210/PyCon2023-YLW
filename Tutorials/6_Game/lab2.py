@@ -1,5 +1,4 @@
 import pygame
-import sys
 
 # Initialize Pygame
 pygame.init()
@@ -21,4 +20,4 @@ while alive:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             alive = False
-        
+pygame.quit()

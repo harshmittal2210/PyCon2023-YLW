@@ -22,6 +22,9 @@ class Track():
             self.x = 0
         self.x -= self.game_speed
 
+    def update(self):
+        ...
+
 class Dinosaur():
     X_POS = 80
     Y_POS = 310

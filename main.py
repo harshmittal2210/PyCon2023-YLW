@@ -97,13 +97,18 @@ class PygameApp(QMainWindow):
             #     for event in pygame.event.get():
             #         if event.type == pygame.QUIT:
             #             running = False
-            pygame.quit()
-
-            end_dialog = QMessageBox()
-            end_dialog.setIcon(QMessageBox.Information)
-            end_dialog.setWindowTitle("Information")
-            end_dialog.setText(f"Code Execution Completed !!")
-            end_dialog.exec_()
+            
+            try:
+                # end_dialog = QMessageBox()
+                # end_dialog.setIcon(QMessageBox.Information)
+                # end_dialog.setWindowTitle("Information")
+                # end_dialog.setText(f"Code Execution Completed !!")
+                # end_dialog.exec_()
+                # pygame.display.quit()
+                ...
+                
+            except Exception as e:
+                print(e)
 
         # Start the Pygame thread
         self.pygame_thread = threading.Thread(target=pygame_thread_function, daemon=True)
