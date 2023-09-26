@@ -3,7 +3,7 @@ import os
 import threading
 import pygame
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QFileDialog
-from PyQt5.QtWidgets import QAction, QTreeWidget, QPushButton, QTreeWidgetItem
+from PyQt5.QtWidgets import QAction, QTreeWidget, QPushButton, QTreeWidgetItem, QMessageBox
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5 import uic  # Import the uic module
@@ -76,6 +76,11 @@ class PygameApp(QMainWindow):
                 exec(pygameCode)
             except Exception as e:
                 print(f"Error: {e}")
+                error_dialog = QMessageBox()
+                error_dialog.setIcon(QMessageBox.Critical)
+                error_dialog.setWindowTitle("Error")
+                error_dialog.setText(f"Error: {e}")
+                error_dialog.exec_()
 
             # Main loop to keep the Pygame window open
             
@@ -84,6 +89,12 @@ class PygameApp(QMainWindow):
             #         if event.type == pygame.QUIT:
             #             running = False
             pygame.quit()
+
+            end_dialog = QMessageBox()
+            end_dialog.setIcon(QMessageBox.Information)
+            end_dialog.setWindowTitle("Information")
+            end_dialog.setText(f"Code Execution Completed !!")
+            end_dialog.exec_()
 
         # Start the Pygame thread
         self.pygame_thread = threading.Thread(target=pygame_thread_function, daemon=True)

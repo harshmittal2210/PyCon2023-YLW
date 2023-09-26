@@ -4,18 +4,18 @@ import sys
 # Initialize Pygame
 pygame.init()
 
-########## Make Changes Here##############
-
-SCREEN_HEIGHT =   # Enter the window Height
-SCREEN_WIDTH =    # Enter the window Width
+SCREEN_HEIGHT = 600  # Enter the window Height
+SCREEN_WIDTH = 1100   # Enter the window Width
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-############## End Code ##################
 
 alive = True
 
 while alive:
-    SCREEN.fill((255, 255, 255))
+
+    ########## Make Changes Here##############
+    SCREEN.fill((__, __, __))
+    ############## End Code ##################
 
     pygame.display.update()
     for event in pygame.event.get():
