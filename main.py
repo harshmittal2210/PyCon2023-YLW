@@ -25,6 +25,8 @@ class PygameApp(QMainWindow):
         self.runButton:QPushButton
         self.terminalButton:QPushButton
         self.fileDirTreeWidget:QTreeWidget
+        self.zoomInButton:QPushButton
+        self.zoomOutButton:QPushButton
 
         self.actionOpen:QAction
         self.actionSave:QAction
@@ -40,6 +42,8 @@ class PygameApp(QMainWindow):
         self.runButton.clicked.connect(self.runPygameCode)
         self.terminalButton.clicked.connect(self.runTerminalCommand)
         self.fileDirTreeWidget.itemDoubleClicked.connect(self.openTutorialFile)
+        self.zoomInButton.clicked.connect(self.textZoomIn)
+        self.zoomOutButton.clicked.connect(self.textZoomOut)
 
         ## Actions
         self.actionOpen.triggered.connect(self.open_file)
@@ -54,7 +58,12 @@ class PygameApp(QMainWindow):
         self.fileDirTreeWidget.sortItems(0, 0)
 
         self.show()
-        
+
+    def textZoomIn(self):
+        self.codeEditorWidget.textZoomIn()
+    
+    def textZoomOut(self):
+        self.codeEditorWidget.textZoomOut()
 
     def runPygameCode(self):
         # Clear the Pygame screen if it's already open
