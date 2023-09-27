@@ -1,5 +1,5 @@
 import pygame
-from dinoGame.elements import Track
+from dinoGame.elements import Track, Dinosaur, Cloud
 
 # Initialize Pygame
 pygame.init()
@@ -14,23 +14,21 @@ alive = True
 while alive:
 
     SCREEN.fill((255, 255, 255))
-
-    #######Add Starting text#####
     font = pygame.font.Font('freesansbold.ttf', 30)
     text = font.render("Press any Key to Start", True, (0, 0, 0))
     textRect = text.get_rect()
     textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 3)
     SCREEN.blit(text, textRect)
-    ############################
 
     pygame.display.update()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             alive = False
-        ############ Press Key to start ########
         elif event.type == pygame.KEYDOWN:
             ## Start Game
             ground = Track(SCREEN)
+            dino = Dinosaur(SCREEN)
+            cloud = Cloud(SCREEN)
             clock = pygame.time.Clock()
 
             run = True
@@ -40,10 +38,19 @@ while alive:
                         run = False
                         continue
 
+                ## Update The Elements
+                user_input = pygame.key.get_pressed()
+                dino.update(user_input)
+                ground.update()
+
+                ################
+
+                ### Draw All Layers
                 SCREEN.fill((255,255,255))
-                
                 ground.draw()
+
+                ##############End
+
                 clock.tick(30)
                 pygame.display.update()
-        #########################################
 pygame.quit()

@@ -62,7 +62,7 @@ while alive:
                 got_hit = False
                 for obstacle in obstacles:
                     obstacle.draw()
-                    points += obstacle.update(obstacles)
+                    points += obstacle.update_obs(obstacles)
                     if dino.dino_rect.colliderect(obstacle.rect):
                         run = False
                         got_hit = True
@@ -74,6 +74,7 @@ while alive:
 
 
                 ground.draw()
+                ground.update()
                 dino.update(user_input)
                 dino.draw()
 
@@ -87,3 +88,4 @@ while alive:
 
                 clock.tick(30)
                 pygame.display.update()
+pygame.quit()

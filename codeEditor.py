@@ -22,11 +22,23 @@ class PythonCodeEditor(QsciScintilla):
         # Create a syntax highlighter
         self.highlighter = PythonSyntaxHighlighter(self)
 
-        font = QFont()
-        screen_dpi = QApplication.primaryScreen().logicalDotsPerInch()
-        font_size = int(screen_dpi / 96 * 16)
-        font.setPixelSize(font_size)
-        self.setFont(font)
+        # font = QFont()
+        # screen_dpi = QApplication.primaryScreen().logicalDotsPerInch()
+        # font_size = int(screen_dpi / 96 * 16)
+        # font.setPixelSize(font_size)
+        # self.setFont(font)
+
+        self.zoom_level = 5
+        self.zoomTo(self.zoom_level)
+    
+    def textZoomIn(self):
+        self.zoom_level *= 2
+        self.zoomTo(self.zoom_level)
+    
+    def textZoomOut(self):
+        self.zoom_level /= 2
+        self.zoom_level = max(self.zoom_level, 2)
+        self.zoomTo(self.zoom_level)
 
     def setPlainText(self, text):
         self.setText(text)
