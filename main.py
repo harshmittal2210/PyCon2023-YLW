@@ -3,7 +3,7 @@ import os
 import threading
 import pygame
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QFileDialog
-from PyQt5.QtWidgets import QAction, QTreeWidget, QPushButton, QTreeWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QAction, QTreeWidget, QPushButton, QTreeWidgetItem, QMessageBox, QLabel
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5 import uic  # Import the uic module
@@ -28,6 +28,7 @@ class PygameApp(QMainWindow):
         self.fileDirTreeWidget:QTreeWidget
         self.zoomInButton:QPushButton
         self.zoomOutButton:QPushButton
+        self.fileNameLabel:QLabel
 
         self.actionOpen:QAction
         self.actionSave:QAction
@@ -147,7 +148,7 @@ class PygameApp(QMainWindow):
         while item is not None:
             path.insert(0, item.text(0))
             item = item.parent()
-
+        
         # Join the path elements and print it
         full_path = os.path.join("./Tutorials", *path)  # Join with "/" as the separator
         # print("Double-clicked:", full_path)
@@ -156,6 +157,7 @@ class PygameApp(QMainWindow):
                 # Read the entire file content into a string
                 file_content = file.read()
                 self.codeEditorWidget.setPlainText(file_content)
+                self.fileNameLabel.setText(f"{path[-2]}/{path[-1]}")
     
     def open_file(self):
         options = QFileDialog.Options()
@@ -174,6 +176,7 @@ class PygameApp(QMainWindow):
                     file_contents = file.read()
                     # Now you can work with the file_contents
                     self.codeEditorWidget.setPlainText(file_contents)
+                    self.fileNameLabel.setText(file_path)
                     return
     
     def save_file(self):
@@ -191,6 +194,7 @@ class PygameApp(QMainWindow):
         if file_path:
             with open(file_path, 'w') as file:
                 file.write(self.codeEditorWidget.text())
+                self.fileNameLabel.setText(file_path)
     
     def open_faq(self):
         url = QUrl("https://www.harshmittal.co.in/PyCon2023-YLW")
