@@ -1,3 +1,10 @@
+##########################################
+"""
+Lab:5 Objectives
+- Update Obstacle
+- Create New Obstacles
+"""
+##########################################
 import pygame
 from dinoGame.elements import Track, Dinosaur, Cloud
 from dinoGame.elements import LargeCactus, Bird, SmallCactus

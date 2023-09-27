@@ -1,3 +1,9 @@
+##########################################
+"""
+Lab:4 Objectives
+- Add More Game Elements
+"""
+##########################################
 import pygame
 from dinoGame.elements import Track, Dinosaur, Cloud
 

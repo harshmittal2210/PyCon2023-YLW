@@ -1,3 +1,12 @@
+##########################################
+"""
+Lab:7 Objectives
+- Init Score Text
+- Game Score Text
+- Update Game Score
+- Update Total Score
+"""
+##########################################
 import pygame
 from dinoGame.elements import Track, Dinosaur, Cloud
 from dinoGame.elements import LargeCactus, Bird, SmallCactus

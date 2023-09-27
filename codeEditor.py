@@ -33,6 +33,7 @@ class PythonCodeEditor(QsciScintilla):
     
     def textZoomIn(self):
         self.zoom_level *= 2
+        self.zoom_level = min(self.zoom_level, 20)
         self.zoomTo(self.zoom_level)
     
     def textZoomOut(self):

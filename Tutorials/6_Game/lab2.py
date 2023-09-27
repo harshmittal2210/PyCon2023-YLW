@@ -1,3 +1,10 @@
+##########################################
+"""
+Lab:2 Objectives
+- Add Background Color
+- Understand Layers Concept
+"""
+##########################################
 import pygame
 
 # Initialize Pygame

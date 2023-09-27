@@ -1,3 +1,11 @@
+##########################################
+"""
+Lab:3 Objectives
+- Understand Layers in Game Development
+- Understand Initial Text
+- Understand Game Elements
+"""
+##########################################
 import pygame
 from dinoGame.elements import Track
 

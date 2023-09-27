@@ -1,3 +1,9 @@
+##########################################
+"""
+Lab:8 Objectives
+- Have Different Obstacles
+"""
+##########################################
 import pygame
 from dinoGame.elements import Track, Dinosaur, Cloud
 from dinoGame.elements import LargeCactus, Bird, SmallCactus

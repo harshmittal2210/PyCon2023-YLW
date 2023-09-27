@@ -1,3 +1,9 @@
+##########################################
+"""
+Lab:6 Objectives
+- Detection Collision
+"""
+##########################################
 import pygame
 from dinoGame.elements import Track, Dinosaur, Cloud
 from dinoGame.elements import LargeCactus, Bird, SmallCactus
