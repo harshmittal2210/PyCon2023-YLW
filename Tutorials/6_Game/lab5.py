@@ -1,5 +1,6 @@
 import pygame
 from dinoGame.elements import Track, Dinosaur, Cloud
+from dinoGame.elements import LargeCactus, Bird, SmallCactus
 
 # Initialize Pygame
 pygame.init()
@@ -30,6 +31,7 @@ while alive:
             dino = Dinosaur(SCREEN)
             cloud = Cloud(SCREEN)
             clock = pygame.time.Clock()
+            obstacle = None ## Empty Obstacle
 
             run = True
             while run:
@@ -37,19 +39,36 @@ while alive:
                     if event.type == pygame.QUIT:
                         run = False
                         continue
+                
+                ###################################
+                if obstacle == None:
+                    obstacle = SmallCactus(SCREEN)
+                ###################################
 
                 ## Update The Elements
                 user_input = pygame.key.get_pressed()
                 dino.update(user_input)
                 ground.update()
+                cloud.update()
+                obstacle.update()
 
                 ################
 
                 ### Draw All Layers
                 SCREEN.fill((255,255,255))
                 ground.draw()
+                dino.draw()
+                cloud.draw()
+                obstacle.draw()
 
-                ##############End
+                ##############
+
+                ##### Write code for obstacle update
+                #obstacle.rect.x -> X coordinate 
+                #obstacle.rect.width -> width
+                #print(obstacle.rect.x)
+
+                ###################
 
                 clock.tick(30)
                 pygame.display.update()

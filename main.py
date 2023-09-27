@@ -20,6 +20,7 @@ class PygameApp(QMainWindow):
     def initUI(self):
         uic.loadUi('ui/editor.ui', self)
         self.setWindowTitle("PyCon Young Learners Workshop")
+        self.setWindowIcon(QIcon("./ui/img/python.png"))
 
         self.codePanelLayout:QVBoxLayout
         self.runButton:QPushButton
@@ -115,8 +116,12 @@ class PygameApp(QMainWindow):
         self.pygame_thread.start()
 
     def runTerminalCommand(self):
-        
+
+        initText = f"import os\nimport sys\nsys.path.insert(0,'{os.path.abspath(__file__).rsplit('/', 1)[0]}/Tutorials/6_Game')\n"
+        # initText = f"import os\nos.environ['PATH'] += ':'+'{os.path.abspath(__file__).rsplit('/', 1)[0]}/Tutorials/6_Game'\n"
+
         with open("temp.py", "w") as file:
+            file.write(initText)
             file.write(self.codeEditorWidget.text())
         command = f"python temp.py"
         subprocess.Popen(["gnome-terminal", "--", "bash", "-c", f"{command}; read -p 'Press Enter to exit...'"])
@@ -199,9 +204,12 @@ class PygameApp(QMainWindow):
 
 
 def main():
-    app = QApplication(sys.argv)
-    ex = PygameApp()
-    sys.exit(app.exec_())
+    try:
+        app = QApplication(sys.argv)
+        ex = PygameApp()
+        sys.exit(app.exec_())
+    except KeyboardInterrupt:
+        exit(0)
 
 
 if __name__ == "__main__":

@@ -15,10 +15,19 @@ while alive:
 
     SCREEN.fill((255, 255, 255))
 
+    #######Add Starting text#####
+    font = pygame.font.Font('freesansbold.ttf', 30)
+    text = font.render("Press any Key to Start", True, (0, 0, 0))
+    textRect = text.get_rect()
+    textRect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 3)
+    SCREEN.blit(text, textRect)
+    ############################
+
     pygame.display.update()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             alive = False
+        ############ Press Key to start ########
         elif event.type == pygame.KEYDOWN:
             ## Start Game
             ground = Track(SCREEN)
@@ -36,4 +45,5 @@ while alive:
                 ground.draw()
                 clock.tick(30)
                 pygame.display.update()
+        #########################################
 pygame.quit()
