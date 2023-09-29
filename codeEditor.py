@@ -38,9 +38,11 @@ class PythonSyntaxHighlighter(QSyntaxHighlighter):
         keyword_format = QTextCharFormat()
         keyword_format.setForeground(Qt.blue)
         keyword_format.setFontWeight(QFont.Bold)
-        keywords = ["if", "else", "while", "for", "def", 
-                    "import", "as", "print", "from", "elif",
-                    "len", "not", "is", "and", "else"]  # Add more as needed
+        keywords = ["False","None","True","and","as","assert","break",
+                    "class","continue","def","del","elif","else","except",
+                    "finally","for","from","global","if","import","in","is",
+                    "lambda","nonlocal","not","or","pass","raise","return",
+                    "try","while","with","yield"]  # Add more as needed
         for keyword in keywords:
             rule = (r'\b' + keyword + r'\b', keyword_format)
             self.highlighting_rules.append(rule)
@@ -50,7 +52,12 @@ class PythonSyntaxHighlighter(QSyntaxHighlighter):
         string_format.setForeground(Qt.darkGreen)
         self.highlighting_rules.append((r'\".*\"', string_format))
         self.highlighting_rules.append((r'\'.*\'', string_format))
-        self.highlighting_rules.append((r'\#.*\'', string_format))
+        self.highlighting_rules.append((r'#.*$', string_format))
+
+        triple_double_quoted_format = QTextCharFormat()
+        triple_double_quoted_format.setForeground(Qt.red)
+        self.highlighting_rules.append((r'""".*?"""', triple_double_quoted_format))
+
 
     def highlightBlock(self, text):
         for pattern, format in self.highlighting_rules:
